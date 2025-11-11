@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function PostCard({ post, onLikeChange }) {
-  const [liked, setLiked] = useState(false);
-
-  useEffect(() => {
+  const [liked, setLiked] = useState(() => {
+    if (!post.id) return false;
     const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
-    setLiked(likedPosts.includes(post.id));
-  }, [post.id]);
+    return likedPosts.includes(post.id);
+  });
 
   const handleToggleLike = async () => {
     const newLiked = !liked;
@@ -74,12 +73,7 @@ function PostCard({ post, onLikeChange }) {
             title={liked ? "Quitar me gusta" : "Dar me gusta"}
           >
             {liked ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="28"
-                height="28"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
                 <defs>
                   <linearGradient id="igGrad" x1="0" x2="1" y1="0" y2="1">
                     <stop offset="0%" stopColor="#ff5f6d" />
@@ -93,12 +87,7 @@ function PostCard({ post, onLikeChange }) {
                 />
               </svg>
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="28"
-                height="28"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
                 <path
                   fill="none"
                   stroke="currentColor"

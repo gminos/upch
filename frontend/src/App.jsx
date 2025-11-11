@@ -62,26 +62,25 @@ function App() {
     };
   }, []);
 
-  const handleCreatePost = async (title, content, categories = []) => {
-    try {
-      const res = await fetch(`${API_URL}/posts/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, content, categories }),
-      });
+const handleCreatePost = async (title, content, categories = []) => {
+  try {
+    const res = await fetch(`${API_URL}/posts/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, content, categories }),
+    });
 
-      if (res.ok) {
-        const created = await res.json();
-        setPosts((prev) => [created, ...prev]);
-        setMessage("Publicación creada");
-      } else {
-        setMessage("Error al crear publicación");
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage("No se pudo conectar con el servidor");
+    if (res.ok) {
+      const created = await res.json();
+      setPosts((prev) => [{ ...created, liked: false }, ...prev]);
+      setMessage("Publicación creada");
+    } else {
+      setMessage("Error al crear publicación");
     }
-  };
+  } catch (error) {
+    setMessage("No se pudo conectar con el servidor");
+  }
+};
 
   const handleLikeChange = (updatedPost) => {
     setPosts((prevPosts) =>
@@ -114,7 +113,6 @@ function App() {
       <PostForm onCreate={handleCreatePost} />
       {message && <Message text={message} />}
 
-      {/* Filtros principales */}
       <div className="max-w-2xl mx-auto w-full flex flex-wrap gap-4 justify-center mb-2">
         <CategoryButton
           name="🕒 Recientes"
@@ -130,12 +128,10 @@ function App() {
         />
       </div>
 
-      {/* Línea divisoria centrada y con margen */}
       <div className="max-w-2xl mx-auto w-full my-6">
         <hr className="border-white/30" />
       </div>
 
-      {/* Filtros por categoría secundaria */}
       <div className="max-w-2xl mx-auto w-full flex flex-wrap gap-2 justify-center mb-6">
         {categories.map((cat) => (
           <CategoryButton
