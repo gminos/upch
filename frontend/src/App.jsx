@@ -62,25 +62,25 @@ function App() {
     };
   }, []);
 
-const handleCreatePost = async (title, content, categories = []) => {
-  try {
-    const res = await fetch(`${API_URL}/posts/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content, categories }),
-    });
+  const handleCreatePost = async (title, content, categories = []) => {
+    try {
+      const res = await fetch(`${API_URL}/posts/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, content, categories }),
+      });
 
-    if (res.ok) {
-      const created = await res.json();
-      setPosts((prev) => [{ ...created, liked: false }, ...prev]);
-      setMessage("Publicación creada");
-    } else {
-      setMessage("Error al crear publicación");
+      if (res.ok) {
+        const created = await res.json();
+        setPosts((prev) => [{ ...created, liked: false }, ...prev]);
+        setMessage("Publicación creada");
+      } else {
+        setMessage("Error al crear publicación");
+      }
+    } catch (error) {
+      setMessage("No se pudo conectar con el servidor");
     }
-  } catch (error) {
-    setMessage("No se pudo conectar con el servidor");
-  }
-};
+  };
 
   const handleLikeChange = (updatedPost) => {
     setPosts((prevPosts) =>
@@ -110,43 +110,51 @@ const handleCreatePost = async (title, content, categories = []) => {
 
   return (
     <Layout title="Escribe tu historia">
+
       <PostForm onCreate={handleCreatePost} />
+
       {message && <Message text={message} />}
 
-      <div className="max-w-2xl mx-auto w-full flex flex-wrap gap-4 justify-center mb-2">
-        <CategoryButton
-          name="🕒 Recientes"
-          active={filter === "recent"}
-          onClick={() => setFilter("recent")}
-          variant="primary"
-        />
-        <CategoryButton
-          name="❤️ Más Likes"
-          active={filter === "likes"}
-          onClick={() => setFilter("likes")}
-          variant="primary"
-        />
-      </div>
+      <div className="max-w-2xl mx-auto w-full mt-10 mb-6 text-center">
+        <h2 className="text-lg font-semibold text-gray-100 mb-3">
+          Explora publicaciones
+        </h2>
+        <p className="text-sm text-gray-400 mb-4">
+          Filtra por tipo o categoría para encontrar lo que más te interese.
+        </p>
+        <hr className="border-white/20 mb-6" />
 
-      <div className="max-w-2xl mx-auto w-full my-6">
-        <hr className="border-white/30" />
-      </div>
-
-      <div className="max-w-2xl mx-auto w-full flex flex-wrap gap-2 justify-center mb-6">
-        {categories.map((cat) => (
+        <div className="flex flex-wrap gap-3 justify-center mb-6">
           <CategoryButton
-            key={cat.id}
-            name={cat.name}
-            active={selectedCategory === cat.id}
-            onClick={() =>
-              setSelectedCategory(
-                selectedCategory === cat.id ? null : cat.id
-              )
-            }
-            icon={<Tag size={14} />}
-            variant="secondary"
+            name="🕒 Recientes"
+            active={filter === "recent"}
+            onClick={() => setFilter("recent")}
+            variant="primary"
           />
-        ))}
+          <CategoryButton
+            name="❤️ Más Likes"
+            active={filter === "likes"}
+            onClick={() => setFilter("likes")}
+            variant="primary"
+          />
+        </div>
+
+        <div className="flex flex-wrap gap-2 justify-center mb-6">
+          {categories.map((cat) => (
+            <CategoryButton
+              key={cat.id}
+              name={cat.name}
+              active={selectedCategory === cat.id}
+              onClick={() =>
+                setSelectedCategory(
+                  selectedCategory === cat.id ? null : cat.id
+                )
+              }
+              icon={<Tag size={14} />}
+              variant="secondary"
+            />
+          ))}
+        </div>
       </div>
 
       <PostList posts={filteredPosts} onLikeChange={handleLikeChange} />
