@@ -82,10 +82,8 @@ function PostForm({ onCreate }) {
               return (
                 <label
                   key={cat.id}
-                  className={`flex items-center gap-2 cursor-pointer select-none px-4 py-2 rounded-full border text-sm font-medium transition-all ${isSelected
-                      ? "bg-cyan-500/20 border-cyan-400 text-cyan-300"
-                      : "bg-transparent border-white/20 text-gray-300 hover:border-cyan-400/60 hover:text-cyan-200"
-                    }`}
+                  className={`flex items-center gap-2 cursor-pointer select-none px-4 py-2 rounded-full border text-sm font-medium transition-all 
+                    ${isSelected ? "bg-cyan-500/20 border-cyan-400 text-cyan-300" : "bg-transparent border-white/20 text-gray-300 hover:border-cyan-400/60 hover:text-cyan-200" }`}
                 >
                   <input
                     type="checkbox"
@@ -94,10 +92,8 @@ function PostForm({ onCreate }) {
                     className="hidden"
                   />
                   <span
-                    className={`w-4 h-4 flex items-center justify-center rounded-md border ${isSelected
-                        ? "border-cyan-400 bg-cyan-400/30"
-                        : "border-white/20"
-                      }`}
+                    className={`w-4 h-4 flex items-center justify-center rounded-md border 
+                      ${isSelected ? "border-cyan-400 bg-cyan-400/30" : "border-white/20"}`}
                   >
                     {isSelected && (
                       <svg
