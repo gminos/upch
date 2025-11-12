@@ -68,7 +68,7 @@ function PostForm({ onCreate }) {
 
       <div className="mt-5">
         <p className="text-gray-300 text-sm mb-3 text-center">
-          Selecciona categorías
+          Selecciona categorías que se adapten a tu historia.
         </p>
 
         {categories.length === 0 ? (
