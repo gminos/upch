@@ -7,7 +7,6 @@ function CategoryButton({ name, active, onClick, icon, variant = "secondary" }) 
   const primaryClasses =
     "filter-bubble " + (active ? "active" : "");
 
-  // 🔹 Degradado hover para secundarias
   const secondaryClasses =
     "bg-transparent border-white/30 text-gray-300 " +
     "hover:bg-gradient-to-r hover:from-cyan-500/30 hover:via-cyan-400/20 hover:to-cyan-500/30 hover:text-white hover:shadow-md";
