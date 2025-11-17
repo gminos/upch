@@ -1,5 +1,7 @@
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.db.models import F
 from .models import Post, Category
 from .serializers import PostSerializer, PostCreateSerializer, CategorySerializer
 
@@ -16,10 +18,24 @@ class PostViewSet(viewsets.ModelViewSet):
         create_serializer = PostCreateSerializer(data=request.data)
         create_serializer.is_valid(raise_exception=True)
         post = create_serializer.save()
-
         read_serializer = PostSerializer(post, context=self.get_serializer_context())
-
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['post'])
+    def like(self, request, pk=None):
+        post = self.get_object()
+        Post.objects.filter(id=post.id).update(likes=F('likes') + 1)
+        post.refresh_from_db()
+        serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def unlike(self, request, pk=None):
+        post = self.get_object()
+        Post.objects.filter(id=post.id).update(likes=F('likes') - 1)
+        post.refresh_from_db()
+        serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

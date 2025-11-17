@@ -10,30 +10,20 @@ function PostCard({ post, onLikeChange }) {
   });
 
   const handleToggleLike = async () => {
-    const newLiked = !liked;
-    const newLikes = post.likes + (newLiked ? 1 : -1);
-
     try {
-      const res = await fetch(`${API_URL}/posts/${post.id}/`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ likes: Math.max(0, newLikes) }),
-      });
+      const endpoint = liked ? `${API_URL}/posts/${post.id}/unlike/` : `${API_URL}/posts/${post.id}/like/`;
 
+      const res = await fetch(endpoint, { method: 'POST' });
       if (res.ok) {
         const updatedPost = await res.json();
         onLikeChange(updatedPost);
 
-        const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
-        if (newLiked) {
-          likedPosts.push(post.id);
-        } else {
-          const index = likedPosts.indexOf(post.id);
-          if (index !== -1) likedPosts.splice(index, 1);
-        }
-        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+        setLiked(!liked);
 
-        setLiked(newLiked);
+        const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+        if (!liked) likedPosts.push(post.id);
+        else likedPosts.splice(likedPosts.indexOf(post.id), 1);
+        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
       }
     } catch (error) {
       console.error("Error al conectar con el servidor:", error);
