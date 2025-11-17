@@ -3,7 +3,7 @@ services:
     image: postgres:17-alpine
     container_name: db_blog
     env_file:
-      - ./backend/.env
+      - ./backend/.env.prod
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
@@ -13,12 +13,12 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    env_file:
+      - ./backend/.env.prod
     volumes:
       - ./backend/blog_project:/app/blog_project
       - ./backend/blog:/app/blog
       - static_data:/app/staticfiles
-    env_file:
-      - ./backend/.env
     environment:
       DB_HOST: db
     depends_on:
@@ -30,6 +30,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: nginx
+    env_file:
+      - ./frontend/.env.prod
     ports:
       - "80:80"
       - "443:443"
