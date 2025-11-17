@@ -45,8 +45,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = os.getenv("DJANGO_CORS_ALLOWED_ORIGINS", "").split(",")
-CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+raw_cors = os.getenv("DJANGO_CORS_ALLOWED_ORIGINS", "")
+raw_origins = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "")
+CORS_ALLOWED_ORIGINS = [o for o in raw_cors.split(",") if o]
+CSRF_TRUSTED_ORIGINS = [o for o in raw_origins.split(",") if o]
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
