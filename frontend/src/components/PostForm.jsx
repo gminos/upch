@@ -82,8 +82,11 @@ function PostForm({ onCreate }) {
               return (
                 <label
                   key={cat.id}
-                  className={`flex items-center gap-2 cursor-pointer select-none px-4 py-2 rounded-full border text-sm font-medium transition-all 
-                    ${isSelected ? "bg-cyan-500/20 border-cyan-400 text-cyan-300" : "bg-transparent border-white/20 text-gray-300 hover:border-cyan-400/60 hover:text-cyan-200" }`}
+                  className={`flex items-center gap-2 cursor-pointer select-none px-4 py-2 rounded-full border text-sm font-medium transition-all
+                  ${isSelected
+                      ? "bg-cyan-500/20 border-cyan-400 text-cyan-300"
+                      : "bg-transparent border-white/20 text-gray-300 hover:bg-cyan-500/20 hover:text-cyan-200 hover:border-cyan-400/40"
+                    }`}
                 >
                   <input
                     type="checkbox"
@@ -91,9 +94,13 @@ function PostForm({ onCreate }) {
                     onChange={() => toggleCategory(cat.id)}
                     className="hidden"
                   />
+
                   <span
                     className={`w-4 h-4 flex items-center justify-center rounded-md border 
-                      ${isSelected ? "border-cyan-400 bg-cyan-400/30" : "border-white/20"}`}
+                    ${isSelected
+                        ? "border-cyan-400 bg-cyan-400/30"
+                        : "border-white/20"
+                      }`}
                   >
                     {isSelected && (
                       <svg
@@ -110,6 +117,7 @@ function PostForm({ onCreate }) {
                       </svg>
                     )}
                   </span>
+                  
                   <span>{cat.name}</span>
                 </label>
               );
@@ -120,7 +128,11 @@ function PostForm({ onCreate }) {
 
       <button
         type="submit"
-        className="mt-6 w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-cyan-500/30 transition"
+        className="
+        mt-6 w-full px-4 py-2 rounded-lg border font-medium transition-all
+        bg-transparent border-white/20 text-gray-300
+        hover:bg-cyan-500/20 hover:border-cyan-400 hover:text-cyan-200
+      "
       >
         Publicar
       </button>
