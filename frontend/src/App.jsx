@@ -117,7 +117,7 @@ function App() {
 
       <div className="max-w-2xl mx-auto w-full mt-10 mb-6 text-center">
         <h2 className="text-lg font-semibold text-gray-100 mb-3">
-          Explora publicaciones
+          Explora historias
         </h2>
         <p className="text-sm text-gray-400 mb-4">
           Filtra por tipo o categoría para encontrar lo que más te interese.
