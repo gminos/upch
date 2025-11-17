@@ -27,6 +27,17 @@ services:
       - db
     restart: always
 
+  frontend-builder:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - frontend_dist:/dist
+    env_file:
+      - ./frontend/.env.prod
+    command: sh -c "npm ci && npm run build && cp -r dist/* /dist"
+    restart: "no"
+
   nginx:
     build:
       context: ./nginx
@@ -39,8 +50,10 @@ services:
       - "443:443"
     depends_on:
       - backend
+      - frontend-builder
     volumes:
       - static_data:/app/staticfiles:ro
+      - frontend_dist:/usr/share/nginx/html:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/log/nginx:/var/log/nginx
     restart: always
@@ -48,3 +61,4 @@ services:
 volumes:
   static_data:
   postgres_data:
+  frontend_dist:
