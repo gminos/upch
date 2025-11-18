@@ -3,7 +3,7 @@ import PostCard from "./PostCard";
 
 function PostList({ posts, onLikeChange }) {
   if (posts.length === 0) {
-    return <p className="text-gray-400 text-center">No hay publicaciones aún.</p>;
+    return <p className="text-gray-400 text-center">No hay historias aún.</p>;
   }
 
   return (
