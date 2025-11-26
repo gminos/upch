@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'blog'
+    # Local apps
+    'posts'
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-ROOT_URLCONF = 'blog_project.urls'
+ROOT_URLCONF = 'upch_project.urls'
 
 TEMPLATES = [
     {
@@ -71,6 +72,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -79,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'blog_project.wsgi.application'
+WSGI_APPLICATION = 'upch_project.wsgi.application'
 
 
 # Database

@@ -9,4 +9,4 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 8000
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["uv", "run", "gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "blog_project.wsgi:application"]
+CMD ["uv", "run", "gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "upch_project.wsgi:application"]

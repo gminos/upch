@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_post_likes'),
+        ('posts', '0002_post_likes'),
     ]
 
     operations = [
@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='categories',
-            field=models.ManyToManyField(related_name='posts', to='blog.category'),
+            field=models.ManyToManyField(related_name='posts', to='posts.category'),
         ),
     ]

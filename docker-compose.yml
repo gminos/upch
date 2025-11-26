@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:17-alpine
-    container_name: db_blog
+    container_name: db_upch
     env_file:
       - ./backend/.env.prod
     ports:
@@ -18,8 +18,8 @@ services:
     env_file:
       - ./backend/.env.prod
     volumes:
-      - ./backend/blog_project:/app/blog_project
-      - ./backend/blog:/app/blog
+      - ./backend/upch_project:/app/upch_project
+      - ./backend/posts:/app/posts
       - static_data:/app/staticfiles
     environment:
       DB_HOST: db
